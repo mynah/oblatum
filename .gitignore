@@ -4,3 +4,12 @@
 *.jar
 *.war
 *.ear
+
+# IDE Config Files #
+.project
+.classpath
+.idea
+*.iml
+
+# Maven Files #
+target

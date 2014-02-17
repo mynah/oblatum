@@ -1,0 +1,113 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>org.mynah</groupId>
+	<artifactId>oblatum</artifactId>
+	<version>0.0.1-SNAPSHOT</version>
+	<packaging>jar</packaging>
+	<name>oblatum</name>
+	<url>http://www.mynah.org</url>
+
+	<properties>
+		<finalName>oblatum</finalName>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<version.jdk>1.6</version.jdk>
+		<version.maven-compiler-plugin>2.5.1</version.maven-compiler-plugin>
+		<version.maven-checkstyle-plugin>2.9.1</version.maven-checkstyle-plugin>
+		<version.maven-resources-plugin>2.6</version.maven-resources-plugin>
+		<version.maven-javadoc-plugin>2.9</version.maven-javadoc-plugin>
+		<!-- Spring version -->
+		<version.spring>4.0.1.RELEASE</version.spring>
+		<!-- Test -->
+		<version.junit>4.11</version.junit>
+		<version.hamcrest>1.3</version.hamcrest>
+	</properties>
+
+	<dependencies>
+		<!-- Spring dependencies -->
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-beans</artifactId>
+			<version>${version.spring}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-jdbc</artifactId>
+			<version>${version.spring}</version>
+		</dependency>
+		<!-- Test -->
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<version>${version.junit}</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.hamcrest</groupId>
+			<artifactId>hamcrest-all</artifactId>
+			<version>${version.hamcrest}</version>
+			<scope>test</scope>
+		</dependency>
+	</dependencies>
+
+	<build>
+		<resources>
+			<resource>
+				<directory>src/main/resources</directory>
+				<excludes>
+					<exclude>**/etc/</exclude>
+				</excludes>
+			</resource>
+		</resources>
+		<plugins>
+			<plugin>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<version>${version.maven-compiler-plugin}</version>
+				<configuration>
+					<source>${version.jdk}</source>
+					<target>${version.jdk}</target>
+					<encoding>${project.build.sourceEncoding}</encoding>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-resources-plugin</artifactId>
+				<version>${version.maven-resources-plugin}</version>
+				<configuration>
+					<encoding>${project.build.sourceEncoding}</encoding>
+				</configuration>
+			</plugin>
+			<!-- For source code style check -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-checkstyle-plugin</artifactId>
+				<version>${version.maven-checkstyle-plugin}</version>
+				<inherited>false</inherited>
+				<configuration>
+					<configLocation>src/main/resources/etc/beyondtrack_checks.xml</configLocation>
+					<includeTestSourceDirectory>true</includeTestSourceDirectory>
+					<excludes>
+						<!-- com/**/*.java -->
+					</excludes>
+					<consoleOutput>true</consoleOutput>
+					<failOnViolation>true</failOnViolation>
+					<failsOnError>true</failsOnError>
+					<encoding>${project.build.sourceEncoding}</encoding>
+					<!-- Do NOT skip code style check before committing -->
+					<skip>false</skip>
+				</configuration>
+			</plugin>
+			<!-- For javadoc -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-javadoc-plugin</artifactId>
+				<version>${version.maven-javadoc-plugin}</version>
+				<configuration>
+					<charset>${project.build.sourceEncoding}</charset>
+					<encoding>${project.build.sourceEncoding}</encoding>
+				</configuration>
+			</plugin>
+		</plugins>
+		<finalName>${finalName}</finalName>
+	</build>
+</project>
