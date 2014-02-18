@@ -41,6 +41,9 @@ public class MappingTemplate {
 
     private NamedParameterJdbcTemplate namedJdbcTemplate;
 
+    private MappingTemplate() {
+    }
+
     public MappingTemplate(NamedParameterJdbcTemplate namedJdbcTemplate) {
         this.namedJdbcTemplate = namedJdbcTemplate;
     }
