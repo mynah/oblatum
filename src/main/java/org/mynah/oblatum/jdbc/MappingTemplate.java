@@ -10,7 +10,6 @@ import org.springframework.beans.PropertyAccessorFactory;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.namedparam.BeanPropertySqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
-import org.springframework.jdbc.core.namedparam.SqlParameterSource;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
 
@@ -46,87 +45,58 @@ public class MappingTemplate {
         this.namedJdbcTemplate = namedJdbcTemplate;
     }
 
-    public int update(String sql, SqlParameterSource paramSource,
-                      KeyHolder generatedKeyHolder) {
-        return namedJdbcTemplate.update(sql, paramSource, generatedKeyHolder);
-    }
-
     public <T> T queryForObject(T t, Class<T> type) {
-        return namedJdbcTemplate.queryForObject(queryJoin(t),
-                new BeanPropertySqlParameterSource(t),
-                new BeanPropertyRowMapper<T>(type));
+        return namedJdbcTemplate.queryForObject(queryJoin(t), new BeanPropertySqlParameterSource(t), new BeanPropertyRowMapper<T>(type));
     }
 
     public <T> List<T> query(T t, Class<T> type) {
-        return namedJdbcTemplate.query(queryJoin(t),
-                new BeanPropertySqlParameterSource(t),
-                new BeanPropertyRowMapper<T>(type));
+        return namedJdbcTemplate.query(queryJoin(t), new BeanPropertySqlParameterSource(t), new BeanPropertyRowMapper<T>(type));
     }
 
-    // TODO Template这个类还需要重构
     private <T> String queryJoin(T t) {
         StringBuffer sql = new StringBuffer();
         sql.append(SELECT).append(SPACE).append(ASTERISK).append(SPACE);
-        sql.append(FROM).append(SPACE)
-                .append(t.getClass().getSimpleName().toLowerCase())
-                .append(SPACE);
+        sql.append(FROM).append(SPACE).append(t.getClass().getSimpleName().toLowerCase()).append(SPACE);
         sql.append(WHERE).append(SPACE).append(IDENTICAL).append(SPACE);
-        PropertyDescriptor[] pds = BeanUtils.getPropertyDescriptors(t
-                .getClass());
-        BeanWrapper beanWrapper = PropertyAccessorFactory
-                .forBeanPropertyAccess(t);
-        for (int i = 0; i < pds.length;
-             i++) {
+        PropertyDescriptor[] pds = BeanUtils.getPropertyDescriptors(t.getClass());
+        BeanWrapper beanWrapper = PropertyAccessorFactory.forBeanPropertyAccess(t);
+        for (int i = 0; i < pds.length; i++) {
             PropertyDescriptor pd = pds[i];
             String name = pd.getName();
-            if (!CLASS.equals(name) && beanWrapper.isReadableProperty(name)
-                    && beanWrapper.getPropertyValue(name) != null) {
-                sql.append(AND).append(SPACE).append(underscoreName(name))
-                        .append(SPACE);
-                sql.append(EQUAL).append(SPACE).append(COLON).append(name)
-                        .append(SPACE);
+            if (!CLASS.equals(name) && beanWrapper.isReadableProperty(name) && beanWrapper.getPropertyValue(name) != null) {
+                sql.append(AND).append(SPACE).append(underscoreName(name)).append(SPACE);
+                sql.append(EQUAL).append(SPACE).append(COLON).append(name).append(SPACE);
             }
         }
         return sql.toString();
     }
 
     private <T> void parameterJoin(T t, StringBuffer sql) {
-        PropertyDescriptor[] pds = BeanUtils.getPropertyDescriptors(t
-                .getClass());
-        BeanWrapper beanWrapper = PropertyAccessorFactory
-                .forBeanPropertyAccess(t);
+        PropertyDescriptor[] pds = BeanUtils.getPropertyDescriptors(t.getClass());
+        BeanWrapper beanWrapper = PropertyAccessorFactory.forBeanPropertyAccess(t);
         for (int i = 0; i < pds.length; i++) {
             PropertyDescriptor pd = pds[i];
             String name = pd.getName();
-            if (!CLASS.equals(name) && beanWrapper.isReadableProperty(name)
-                    && beanWrapper.getPropertyValue(name) != null) {
-                sql.append(AND).append(SPACE).append(underscoreName(name))
-                        .append(SPACE);
-                sql.append(EQUAL).append(SPACE).append(COLON).append(name)
-                        .append(SPACE);
+            if (!CLASS.equals(name) && beanWrapper.isReadableProperty(name) && beanWrapper.getPropertyValue(name) != null) {
+                sql.append(AND).append(SPACE).append(underscoreName(name)).append(SPACE);
+                sql.append(EQUAL).append(SPACE).append(COLON).append(name).append(SPACE);
             }
         }
     }
 
     public <T> int update(T where, T t) {
         StringBuffer top = new StringBuffer();
-        top.append(UPDATE).append(SPACE)
-                .append(where.getClass().getSimpleName().toLowerCase())
-                .append(SPACE);
+        top.append(UPDATE).append(SPACE).append(where.getClass().getSimpleName().toLowerCase()).append(SPACE);
         top.append(SET).append(SPACE);
-        PropertyDescriptor[] pds = BeanUtils.getPropertyDescriptors(t
-                .getClass());
-        BeanWrapper beanWrapper = PropertyAccessorFactory
-                .forBeanPropertyAccess(t);
+        PropertyDescriptor[] pds = BeanUtils.getPropertyDescriptors(t.getClass());
+        BeanWrapper beanWrapper = PropertyAccessorFactory.forBeanPropertyAccess(t);
         int count = 0;
         for (int i = 0; i < pds.length; i++) {
             PropertyDescriptor pd = pds[i];
             String name = pd.getName();
-            if (!CLASS.equals(name) && beanWrapper.isReadableProperty(name)
-                    && beanWrapper.getPropertyValue(name) != null) {
+            if (!CLASS.equals(name) && beanWrapper.isReadableProperty(name) && beanWrapper.getPropertyValue(name) != null) {
                 top.append(underscoreName(name)).append(SPACE);
-                top.append(EQUAL).append(SPACE).append(COLON).append(name)
-                        .append(SPACE);
+                top.append(EQUAL).append(SPACE).append(COLON).append(name).append(SPACE);
                 top.append(COMMA).append(SPACE);
                 count++;
             }
@@ -140,52 +110,38 @@ public class MappingTemplate {
         }
         sql.append(WHERE).append(SPACE).append(IDENTICAL).append(SPACE);
         parameterJoin(where, sql);
-        return namedJdbcTemplate.update(sql.toString(),
-                new BeanPropertySqlParameterSource(t));
+        return namedJdbcTemplate.update(sql.toString(), new BeanPropertySqlParameterSource(t));
     }
 
     public <T> int delete(T t) {
         StringBuffer sql = new StringBuffer();
-        sql.append(DELETE).append(SPACE).append(FROM).append(SPACE)
-                .append(t.getClass().getSimpleName().toLowerCase())
-                .append(SPACE);
+        sql.append(DELETE).append(SPACE).append(FROM).append(SPACE).append(t.getClass().getSimpleName().toLowerCase()).append(SPACE);
         sql.append(WHERE).append(SPACE).append(IDENTICAL).append(SPACE);
-        PropertyDescriptor[] pds = BeanUtils.getPropertyDescriptors(t
-                .getClass());
-        BeanWrapper beanWrapper = PropertyAccessorFactory
-                .forBeanPropertyAccess(t);
+        PropertyDescriptor[] pds = BeanUtils.getPropertyDescriptors(t.getClass());
+        BeanWrapper beanWrapper = PropertyAccessorFactory.forBeanPropertyAccess(t);
         for (int i = 0; i < pds.length; i++) {
             PropertyDescriptor pd = pds[i];
             String name = pd.getName();
-            if (!CLASS.equals(name) && beanWrapper.isReadableProperty(name)
-                    && beanWrapper.getPropertyValue(name) != null) {
-                sql.append(AND).append(SPACE).append(underscoreName(name))
-                        .append(SPACE);
-                sql.append(EQUAL).append(SPACE).append(COLON).append(name)
-                        .append(SPACE);
+            if (!CLASS.equals(name) && beanWrapper.isReadableProperty(name) && beanWrapper.getPropertyValue(name) != null) {
+                sql.append(AND).append(SPACE).append(underscoreName(name)).append(SPACE);
+                sql.append(EQUAL).append(SPACE).append(COLON).append(name).append(SPACE);
             }
         }
-        return namedJdbcTemplate.update(sql.toString(),
-                new BeanPropertySqlParameterSource(t));
+        return namedJdbcTemplate.update(sql.toString(), new BeanPropertySqlParameterSource(t));
     }
 
     public <T> int insert(T t) {
         StringBuffer top = new StringBuffer();
         StringBuffer bot = new StringBuffer();
-        top.append(INSERT).append(SPACE)
-                .append(t.getClass().getSimpleName().toLowerCase())
-                .append(SPACE).append(LEFT_BRACKET);
+        top.append(INSERT).append(SPACE).append(t.getClass().getSimpleName().toLowerCase()).append(SPACE).append(LEFT_BRACKET);
         bot.append(VALUES).append(LEFT_BRACKET);
-        PropertyDescriptor[] pds = BeanUtils.getPropertyDescriptors(t
-                .getClass());
-        BeanWrapper beanWrapper = PropertyAccessorFactory
-                .forBeanPropertyAccess(t);
+        PropertyDescriptor[] pds = BeanUtils.getPropertyDescriptors(t.getClass());
+        BeanWrapper beanWrapper = PropertyAccessorFactory.forBeanPropertyAccess(t);
         int count = 0;
         for (int i = 0; i < pds.length; i++) {
             PropertyDescriptor pd = pds[i];
             String name = pd.getName();
-            if (!CLASS.equals(name) && beanWrapper.isReadableProperty(name)
-                    && beanWrapper.getPropertyValue(name) != null) {
+            if (!CLASS.equals(name) && beanWrapper.isReadableProperty(name) && beanWrapper.getPropertyValue(name) != null) {
                 top.append(underscoreName(name)).append(COMMA).append(SPACE);
                 bot.append(COLON).append(name).append(COMMA).append(SPACE);
                 count++;
@@ -196,14 +152,11 @@ public class MappingTemplate {
             logger.error("no values for insert");
             return 0;
         } else {
-            sql.append(top.toString().substring(0, top.lastIndexOf(COMMA)))
-                    .append(RIGHT_BRACKET);
-            sql.append(bot.toString().substring(0, bot.lastIndexOf(COMMA)))
-                    .append(RIGHT_BRACKET);
+            sql.append(top.toString().substring(0, top.lastIndexOf(COMMA))).append(RIGHT_BRACKET);
+            sql.append(bot.toString().substring(0, bot.lastIndexOf(COMMA))).append(RIGHT_BRACKET);
         }
         KeyHolder keyHolder = new GeneratedKeyHolder();
-        this.update(sql.toString(), new BeanPropertySqlParameterSource(t),
-                keyHolder);
+        this.namedJdbcTemplate.update(sql.toString(), new BeanPropertySqlParameterSource(t), keyHolder);
         return keyHolder.getKey().intValue();
     }
 
