@@ -4,6 +4,7 @@ import javax.sql.DataSource;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
+import org.springframework.jdbc.datasource.DataSourceUtils;
 
 public class SqlGenerator {
 
@@ -13,7 +14,7 @@ public class SqlGenerator {
     }
 
     public SqlGenerator(DataSource dataSource) throws SQLException {
-        this.connection = dataSource.getConnection();
+        this.connection = DataSourceUtils.getConnection(dataSource);
     }
 
     public SqlGenerator(String driverClassName, String url, String username, String password) throws ClassNotFoundException, SQLException {
