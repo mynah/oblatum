@@ -54,7 +54,7 @@ public class MappingTemplate {
     }
 
     private <T> String queryJoin(T t) {
-        StringBuffer sql = new StringBuffer();
+        StringBuilder sql = new StringBuilder();
         sql.append(SELECT).append(SPACE).append(ASTERISK).append(SPACE);
         sql.append(FROM).append(SPACE).append(t.getClass().getSimpleName().toLowerCase()).append(SPACE);
         sql.append(WHERE).append(SPACE).append(IDENTICAL).append(SPACE);
@@ -85,7 +85,7 @@ public class MappingTemplate {
     }
 
     public <T> int update(T where, T t) {
-        StringBuffer top = new StringBuffer();
+        StringBuilder top = new StringBuilder();
         top.append(UPDATE).append(SPACE).append(where.getClass().getSimpleName().toLowerCase()).append(SPACE);
         top.append(SET).append(SPACE);
         PropertyDescriptor[] pds = BeanUtils.getPropertyDescriptors(t.getClass());
@@ -114,7 +114,7 @@ public class MappingTemplate {
     }
 
     public <T> int delete(T t) {
-        StringBuffer sql = new StringBuffer();
+        StringBuilder sql = new StringBuilder();
         sql.append(DELETE).append(SPACE).append(FROM).append(SPACE).append(t.getClass().getSimpleName().toLowerCase()).append(SPACE);
         sql.append(WHERE).append(SPACE).append(IDENTICAL).append(SPACE);
         PropertyDescriptor[] pds = BeanUtils.getPropertyDescriptors(t.getClass());
@@ -131,8 +131,8 @@ public class MappingTemplate {
     }
 
     public <T> int insert(T t) {
-        StringBuffer top = new StringBuffer();
-        StringBuffer bot = new StringBuffer();
+        StringBuilder top = new StringBuilder();
+        StringBuilder bot = new StringBuilder();
         top.append(INSERT).append(SPACE).append(t.getClass().getSimpleName().toLowerCase()).append(SPACE).append(LEFT_BRACKET);
         bot.append(VALUES).append(LEFT_BRACKET);
         PropertyDescriptor[] pds = BeanUtils.getPropertyDescriptors(t.getClass());
@@ -147,7 +147,7 @@ public class MappingTemplate {
                 count++;
             }
         }
-        StringBuffer sql = new StringBuffer();
+        StringBuilder sql = new StringBuilder();
         if (count <= 0) {
             logger.error("no values for insert");
             return 0;
