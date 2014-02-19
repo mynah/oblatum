@@ -7,13 +7,14 @@ import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.BeanWrapper;
 import org.springframework.beans.PropertyAccessorFactory;
+import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.namedparam.BeanPropertySqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
 
-public class MappingTemplate {
+public class MappingJdbcTemplate implements MappingJdbcOperations {
 
     /**
      * Logger available to subclasses
@@ -41,18 +42,18 @@ public class MappingTemplate {
 
     private NamedParameterJdbcTemplate namedJdbcTemplate;
 
-    private MappingTemplate() {
+    private MappingJdbcTemplate() {
     }
 
-    public MappingTemplate(NamedParameterJdbcTemplate namedJdbcTemplate) {
+    public MappingJdbcTemplate(NamedParameterJdbcTemplate namedJdbcTemplate) {
         this.namedJdbcTemplate = namedJdbcTemplate;
     }
 
-    public <T> T queryForObject(T t, Class<T> type) {
+    public <T> T queryForObject(T t, Class<T> type) throws DataAccessException {
         return namedJdbcTemplate.queryForObject(queryJoin(t), new BeanPropertySqlParameterSource(t), new BeanPropertyRowMapper<T>(type));
     }
 
-    public <T> List<T> query(T t, Class<T> type) {
+    public <T> List<T> query(T t, Class<T> type) throws DataAccessException {
         return namedJdbcTemplate.query(queryJoin(t), new BeanPropertySqlParameterSource(t), new BeanPropertyRowMapper<T>(type));
     }
 
@@ -87,7 +88,7 @@ public class MappingTemplate {
         }
     }
 
-    public <T> int update(T where, T t) {
+    public <T> int update(T where, T t) throws DataAccessException {
         StringBuilder top = new StringBuilder();
         top.append(UPDATE).append(SPACE).append(where.getClass().getSimpleName().toLowerCase()).append(SPACE);
         top.append(SET).append(SPACE);
@@ -116,7 +117,7 @@ public class MappingTemplate {
         return namedJdbcTemplate.update(sql.toString(), new BeanPropertySqlParameterSource(t));
     }
 
-    public <T> int delete(T t) {
+    public <T> int delete(T t) throws DataAccessException {
         StringBuilder sql = new StringBuilder();
         sql.append(DELETE).append(SPACE).append(FROM).append(SPACE).append(t.getClass().getSimpleName().toLowerCase()).append(SPACE);
         sql.append(WHERE).append(SPACE).append(IDENTICAL).append(SPACE);
@@ -133,7 +134,7 @@ public class MappingTemplate {
         return namedJdbcTemplate.update(sql.toString(), new BeanPropertySqlParameterSource(t));
     }
 
-    public <T> int insert(T t) {
+    public <T> int insert(T t) throws DataAccessException {
         StringBuilder top = new StringBuilder();
         StringBuilder bot = new StringBuilder();
         top.append(INSERT).append(SPACE).append(t.getClass().getSimpleName().toLowerCase()).append(SPACE).append(LEFT_BRACKET);
