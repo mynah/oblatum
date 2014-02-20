@@ -4,6 +4,7 @@ import java.beans.PropertyDescriptor;
 import java.util.List;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.mynah.oblatum.util.CamelCaseUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.BeanWrapper;
 import org.springframework.beans.PropertyAccessorFactory;
@@ -50,7 +51,7 @@ public class MappingJdbcTemplate implements MappingJdbcOperations {
             PropertyDescriptor pd = pds[i];
             String name = pd.getName();
             if (!CLASS.equals(name) && beanWrapper.isReadableProperty(name) && beanWrapper.getPropertyValue(name) != null) {
-                sql.append(AND).append(SPACE).append(underscoreName(name)).append(SPACE);
+                sql.append(AND).append(SPACE).append(CamelCaseUtils.underscoreName(name)).append(SPACE);
                 sql.append(EQUAL).append(SPACE).append(COLON).append(name).append(SPACE);
             }
         }
@@ -64,7 +65,7 @@ public class MappingJdbcTemplate implements MappingJdbcOperations {
             PropertyDescriptor pd = pds[i];
             String name = pd.getName();
             if (!CLASS.equals(name) && beanWrapper.isReadableProperty(name) && beanWrapper.getPropertyValue(name) != null) {
-                sql.append(AND).append(SPACE).append(underscoreName(name)).append(SPACE);
+                sql.append(AND).append(SPACE).append(CamelCaseUtils.underscoreName(name)).append(SPACE);
                 sql.append(EQUAL).append(SPACE).append(COLON).append(name).append(SPACE);
             }
         }
@@ -81,7 +82,7 @@ public class MappingJdbcTemplate implements MappingJdbcOperations {
             PropertyDescriptor pd = pds[i];
             String name = pd.getName();
             if (!CLASS.equals(name) && beanWrapper.isReadableProperty(name) && beanWrapper.getPropertyValue(name) != null) {
-                top.append(underscoreName(name)).append(SPACE);
+                top.append(CamelCaseUtils.underscoreName(name)).append(SPACE);
                 top.append(EQUAL).append(SPACE).append(COLON).append(name).append(SPACE);
                 top.append(COMMA).append(SPACE);
                 count++;
@@ -109,7 +110,7 @@ public class MappingJdbcTemplate implements MappingJdbcOperations {
             PropertyDescriptor pd = pds[i];
             String name = pd.getName();
             if (!CLASS.equals(name) && beanWrapper.isReadableProperty(name) && beanWrapper.getPropertyValue(name) != null) {
-                sql.append(AND).append(SPACE).append(underscoreName(name)).append(SPACE);
+                sql.append(AND).append(SPACE).append(CamelCaseUtils.underscoreName(name)).append(SPACE);
                 sql.append(EQUAL).append(SPACE).append(COLON).append(name).append(SPACE);
             }
         }
@@ -117,10 +118,10 @@ public class MappingJdbcTemplate implements MappingJdbcOperations {
     }
 
     public <T> int insert(T t) throws DataAccessException {
-        StringBuilder top = new StringBuilder();
-        StringBuilder bot = new StringBuilder();
-        top.append(INSERT).append(SPACE).append(t.getClass().getSimpleName().toLowerCase()).append(SPACE).append(LEFT_BRACKET);
-        bot.append(VALUES).append(LEFT_BRACKET);
+        StringBuilder columns = new StringBuilder();
+        StringBuilder values = new StringBuilder();
+        columns.append(INSERT).append(SPACE).append(t.getClass().getSimpleName().toLowerCase()).append(SPACE).append(LEFT_BRACKET);
+        values.append(VALUES).append(LEFT_BRACKET);
         PropertyDescriptor[] pds = BeanUtils.getPropertyDescriptors(t.getClass());
         BeanWrapper beanWrapper = PropertyAccessorFactory.forBeanPropertyAccess(t);
         int count = 0;
@@ -128,8 +129,8 @@ public class MappingJdbcTemplate implements MappingJdbcOperations {
             PropertyDescriptor pd = pds[i];
             String name = pd.getName();
             if (!CLASS.equals(name) && beanWrapper.isReadableProperty(name) && beanWrapper.getPropertyValue(name) != null) {
-                top.append(underscoreName(name)).append(COMMA).append(SPACE);
-                bot.append(COLON).append(name).append(COMMA).append(SPACE);
+                columns.append(CamelCaseUtils.underscoreName(name)).append(COMMA).append(SPACE);
+                values.append(COLON).append(name).append(COMMA).append(SPACE);
                 count++;
             }
         }
@@ -138,29 +139,12 @@ public class MappingJdbcTemplate implements MappingJdbcOperations {
             logger.error("no values for insert");
             return 0;
         } else {
-            sql.append(top.toString().substring(0, top.lastIndexOf(COMMA))).append(RIGHT_BRACKET);
-            sql.append(bot.toString().substring(0, bot.lastIndexOf(COMMA))).append(RIGHT_BRACKET);
+            sql.append(columns.toString().substring(0, columns.lastIndexOf(COMMA))).append(RIGHT_BRACKET);
+            sql.append(values.toString().substring(0, values.lastIndexOf(COMMA))).append(RIGHT_BRACKET);
         }
         KeyHolder keyHolder = new GeneratedKeyHolder();
         this.namedJdbcTemplate.update(sql.toString(), new BeanPropertySqlParameterSource(t), keyHolder);
         return keyHolder.getKey().intValue();
-    }
-
-    private String underscoreName(String name) {
-        StringBuilder result = new StringBuilder();
-        if (name != null && name.length() > 0) {
-            result.append(name.substring(0, 1).toLowerCase());
-            for (int i = 1; i < name.length(); i++) {
-                String s = name.substring(i, i + 1);
-                if (s.equals(s.toUpperCase())) {
-                    result.append(UNDERLINE);
-                    result.append(s.toLowerCase());
-                } else {
-                    result.append(s);
-                }
-            }
-        }
-        return result.toString();
     }
 
 }
