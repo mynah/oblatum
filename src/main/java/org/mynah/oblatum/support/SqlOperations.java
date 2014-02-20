@@ -7,5 +7,7 @@ public interface SqlOperations {
     String generateSql(String tableName) throws SQLException;
 
     String generateSelectSql(String tableName) throws SQLException;
+
+    String generateInsertSql(String tableName) throws SQLException;
     
 }

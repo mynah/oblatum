@@ -2,6 +2,7 @@ package org.mynah.oblatum.support;
 
 import javax.sql.DataSource;
 import org.mynah.oblatum.model.Column;
+import org.mynah.oblatum.util.CamelCaseUtils;
 import org.springframework.jdbc.datasource.DataSourceUtils;
 import java.sql.Connection;
 import java.sql.DatabaseMetaData;
@@ -49,7 +50,7 @@ public class SqlGenerator implements SqlOperations {
         ResultSet columnsResultSet = metaData.getColumns(null, metaData.getUserName(), tableName, "%");
         while (columnsResultSet.next()) {
             Column column = new Column();
-            column.setColumnName(columnsResultSet.getString("COLUMN_NAME"));
+            column.setColumnName(columnsResultSet.getString("COLUMN_NAME").toLowerCase());
             column.setDataType(columnsResultSet.getInt("DATA_TYPE"));
             column.setTypeName(columnsResultSet.getString("TYPE_NAME"));
             column.setColumnSize(columnsResultSet.getInt("COLUMN_SIZE"));
@@ -63,6 +64,27 @@ public class SqlGenerator implements SqlOperations {
         }
         DataSourceUtils.releaseConnection(connection, dataSource);
         return columns;
+    }
+
+    public String generateInsertSql(String tableName) throws SQLException {
+        List<Column> list = this.getColumns(tableName);
+        StringBuilder columns = new StringBuilder();
+        StringBuilder values = new StringBuilder();
+        columns.append(INSERT).append(SPACE).append(tableName.toLowerCase()).append(SPACE).append(LEFT_BRACKET);
+        values.append(VALUES).append(SPACE).append(LEFT_BRACKET);
+        int count = list.size() - 1;
+        for (int i = 0; i <= count; i++) {
+            Column column = list.get(i);
+            String columnName = column.getColumnName();
+            columns.append(columnName);
+            values.append(COLON).append(CamelCaseUtils.convertUnderscoreNameToPropertyName(columnName));
+            if (i < count) {
+                columns.append(COMMA).append(SPACE);
+                values.append(COMMA).append(SPACE);
+            }
+        }
+        columns.append(RIGHT_BRACKET).append(SPACE).append(values).append(RIGHT_BRACKET);
+        return columns.toString();
     }
 
     public String generateSelectSql(String tableName) throws SQLException {

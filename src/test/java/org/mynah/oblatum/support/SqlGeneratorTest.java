@@ -14,6 +14,8 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 @ContextConfiguration("classpath:context.xml")
 public class SqlGeneratorTest {
 
+    public static final String TABLE_NAME_TEST = "test";
+
     @Autowired
     private SqlGenerator sqlGenerator;
 
@@ -34,10 +36,15 @@ public class SqlGeneratorTest {
     }
 
     @Test
+    public void testGenerateInsertSql() throws Exception {
+        String sql = sqlGenerator.generateInsertSql(TABLE_NAME_TEST);
+        System.out.println(sql);
+    }
+
+    @Test
     public void testGenerateSql() throws Exception {
         assertThat(10, is(10));
-        String tableName = "test_user";
-        sqlGenerator.generateSql(tableName);
+        sqlGenerator.generateSql(TABLE_NAME_TEST);
     }
 
     @Test
