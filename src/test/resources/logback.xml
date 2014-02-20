@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+	<property name="LOG_PATTERN" value="%d{yyyy-MM-dd HH:mm:ss.SSS} %5p ${PID:- } [%t] --- %-40.40logger{39} : %m%n" />
+	<!-- Appenders -->
+	<appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+		<encoder charset="UTF-8">
+			<pattern>${LOG_PATTERN}</pattern>
+		</encoder>
+	</appender>
+	<!-- Application Loggers -->
+	<logger name="org.mynah.oblatum" level="DEBUG" />
+	<!-- 3rdparty Loggers -->
+	<logger name="org.springframework" level="INFO" />
+	<logger name="com.alibaba.druid" level="INFO" />
+	<logger name="druid.sql.ResultSet" level="INFO" />
+	<logger name="druid.sql.Connection" level="INFO" />
+	<logger name="druid.sql.Statement" level="DEBUG" />
+	<logger name="org.springframework.jdbc.core.JdbcTemplate" level="DEBUG" />
+	<!-- Root Logger -->
+	<root>
+		<appender-ref ref="STDOUT" level="DEBUG" />
+	</root>
+</configuration>
