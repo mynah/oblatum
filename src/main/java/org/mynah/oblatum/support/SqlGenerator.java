@@ -19,7 +19,6 @@ public class SqlGenerator {
         this.dataSource = dataSource;
     }
 
-
     public DataSource getDataSource() {
         return this.dataSource;
     }
