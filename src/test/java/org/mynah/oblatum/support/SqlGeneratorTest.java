@@ -36,7 +36,7 @@ public class SqlGeneratorTest {
     @Test
     public void testGenerateSql() throws Exception {
         assertThat(10, is(10));
-        String tableName = "TEST";
+        String tableName = "test_user";
         sqlGenerator.generateSql(tableName);
     }
 
