@@ -1,36 +1,44 @@
 package org.mynah.oblatum.support;
 
 import javax.sql.DataSource;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.SQLException;
+import java.sql.*;
 import org.springframework.jdbc.datasource.DataSourceUtils;
 
 public class SqlGenerator {
 
-    private Connection connection;
+    private DataSource dataSource;
 
-    private SqlGenerator() {
+    public SqlGenerator() {
     }
 
-    public SqlGenerator(DataSource dataSource) throws SQLException {
-        this.connection = DataSourceUtils.getConnection(dataSource);
+    public SqlGenerator(DataSource dataSource) {
+        setDataSource(dataSource);
     }
 
-    public SqlGenerator(String driverClassName, String url, String username, String password) throws ClassNotFoundException, SQLException {
-        Class.forName(driverClassName);
-        this.connection = DriverManager.getConnection(url, username, password);
+    public void setDataSource(DataSource dataSource) {
+        this.dataSource = dataSource;
     }
 
-    public String generateSql(String tableName) {
 
+    public DataSource getDataSource() {
+        return this.dataSource;
+    }
+
+    public String generateSql(String tableName) throws SQLException {
+        Connection connection = DataSourceUtils.getConnection(dataSource);
+        DatabaseMetaData metaData = connection.getMetaData();
+        ResultSet columns = metaData.getColumns(null, "%", tableName, "%");
+        while (columns.next()) {
+            System.out.println(columns.getString("COLUMN_NAME"));
+        }
+        DataSourceUtils.releaseConnection(connection, dataSource);
         return null;
     }
 
 
     public String generateModel(String tableName) {
 
-        return null;
+        return tableName;
     }
 
 }
