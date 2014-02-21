@@ -42,6 +42,12 @@ public class SqlGeneratorTest {
     }
 
     @Test
+    public void testGenerateDeleteSql() throws Exception {
+        String sql = sqlGenerator.generateDeleteSql(TABLE_NAME_TEST);
+        System.out.println(sql);
+    }
+
+    @Test
     public void testGenerateSql() throws Exception {
         assertThat(10, is(10));
         sqlGenerator.generateSql(TABLE_NAME_TEST);

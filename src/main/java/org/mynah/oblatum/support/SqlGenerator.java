@@ -37,7 +37,7 @@ public class SqlGenerator implements SqlOperations {
         DatabaseMetaData metaData = connection.getMetaData();
         ResultSet primaryKeysResultSet = metaData.getPrimaryKeys(null, metaData.getUserName(), tableName);
         while (primaryKeysResultSet.next()) {
-            primaryKeys.add(primaryKeysResultSet.getString("COLUMN_NAME"));
+            primaryKeys.add(primaryKeysResultSet.getString("COLUMN_NAME").toLowerCase());
         }
         DataSourceUtils.releaseConnection(connection, dataSource);
         return primaryKeys;
@@ -85,6 +85,23 @@ public class SqlGenerator implements SqlOperations {
         }
         columns.append(RIGHT_BRACKET).append(SPACE).append(values).append(RIGHT_BRACKET);
         return columns.toString();
+    }
+
+    public String generateDeleteSql(String tableName) throws SQLException {
+        List<String> primaryKeys = this.getPrimaryKeys(tableName);
+        StringBuilder sql = new StringBuilder();
+        sql.append(DELETE).append(SPACE).append(FROM).append(SPACE).append(tableName.toLowerCase());
+        sql.append(SPACE).append(WHERE);
+        for (int i = 0; i < primaryKeys.size(); i++) {
+            sql.append(SPACE);
+            if (i > 0) {
+                sql.append(AND).append(SPACE);
+            }
+            String primaryKey = primaryKeys.get(i);
+            sql.append(primaryKey).append(SPACE).append(EQUAL).append(SPACE);
+            sql.append(COLON).append(CamelCaseUtils.convertUnderscoreNameToPropertyName(primaryKey));
+        }
+        return sql.toString();
     }
 
     public String generateSelectSql(String tableName) throws SQLException {

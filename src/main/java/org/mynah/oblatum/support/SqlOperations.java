@@ -9,5 +9,7 @@ public interface SqlOperations {
     String generateSelectSql(String tableName) throws SQLException;
 
     String generateInsertSql(String tableName) throws SQLException;
+
+    String generateDeleteSql(String tableName) throws SQLException;
     
 }
