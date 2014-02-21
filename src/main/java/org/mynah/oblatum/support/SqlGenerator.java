@@ -124,9 +124,15 @@ public class SqlGenerator implements SqlOperations {
         return sql.toString();
     }
 
-    public String generateModel(String tableName) {
-
-        return tableName;
+    public String generatePropertyName(String tableName) throws SQLException {
+        StringBuilder text = new StringBuilder();
+        text.append(CamelCaseUtils.convertUnderscoreNameToClassName(tableName)).append(LINE_SEPARATOR);
+        List<Column> list = this.getColumns(tableName);
+        for (int i = 0; i < list.size(); i++) {
+            text.append(CamelCaseUtils.convertUnderscoreNameToPropertyName(list.get(i).getColumnName()));
+            text.append(LINE_SEPARATOR);
+        }
+        return text.toString();
     }
 
     private void appendPrimaryKeys(StringBuilder sql, List<String> primaryKeys) {

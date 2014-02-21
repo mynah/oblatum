@@ -60,9 +60,8 @@ public class SqlGeneratorTest {
     }
 
     @Test
-    public void testGenerateModel() throws Exception {
-        String tableName = "TEST";
-        String text = sqlGenerator.generateModel(tableName);
+    public void testGeneratePropertyName() throws Exception {
+        String text = sqlGenerator.generatePropertyName("tt_source");
         System.out.println(text);
     }
 

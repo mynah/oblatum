@@ -12,4 +12,6 @@ public interface SqlOperations {
 
     String generateUpdateSql(String tableName) throws SQLException;
 
+    String generatePropertyName(String tableName) throws SQLException;
+
 }

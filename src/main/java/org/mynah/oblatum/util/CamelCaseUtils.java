@@ -56,4 +56,26 @@ public class CamelCaseUtils {
         }
         return result.toString();
     }
+
+    public static String convertUnderscoreNameToClassName(String name) {
+        StringBuilder result = new StringBuilder();
+        boolean nextIsUpper = false;
+        if (name != null && name.length() > 0) {
+            for (int i = 0; i < name.length(); i++) {
+                String s = name.substring(i, i + 1);
+                if (s.equals(UNDERLINE)) {
+                    nextIsUpper = true;
+                } else {
+                    if (nextIsUpper || (i == 0)) {
+                        result.append(s.toUpperCase());
+                        nextIsUpper = false;
+                    } else {
+                        result.append(s.toLowerCase());
+                    }
+                }
+            }
+        }
+        return result.toString();
+    }
+
 }
