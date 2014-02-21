@@ -91,6 +91,42 @@ public class SqlGenerator implements SqlOperations {
         List<String> primaryKeys = this.getPrimaryKeys(tableName);
         StringBuilder sql = new StringBuilder();
         sql.append(DELETE).append(SPACE).append(FROM).append(SPACE).append(tableName.toLowerCase());
+        this.appendPrimaryKeys(sql, primaryKeys);
+        return sql.toString();
+    }
+
+    public String generateUpdateSql(String tableName) throws SQLException {
+        List<Column> list = this.getColumns(tableName);
+        List<String> primaryKeys = this.getPrimaryKeys(tableName);
+        StringBuilder sql = new StringBuilder();
+        sql.append(UPDATE).append(SPACE).append(tableName.toLowerCase()).append(SPACE);
+        sql.append(SET);
+        int count = list.size() - 1;
+        for (int i = 0; i <= count; i++) {
+            Column column = list.get(i);
+            String columnName = column.getColumnName();
+            sql.append(SPACE).append(columnName).append(SPACE).append(EQUAL).append(SPACE).append(COLON);
+            sql.append(CamelCaseUtils.convertUnderscoreNameToPropertyName(columnName));
+            if (i < count) {
+                sql.append(COMMA);
+            }
+        }
+        this.appendPrimaryKeys(sql, primaryKeys);
+        return sql.toString();
+    }
+
+    public String generateSelectSql(String tableName) throws SQLException {
+        StringBuilder sql = new StringBuilder();
+        sql.append(SELECT).append(SPACE);
+        return sql.toString();
+    }
+
+    public String generateModel(String tableName) {
+
+        return tableName;
+    }
+
+    private void appendPrimaryKeys(StringBuilder sql, List<String> primaryKeys) {
         sql.append(SPACE).append(WHERE);
         for (int i = 0; i < primaryKeys.size(); i++) {
             sql.append(SPACE);
@@ -101,24 +137,6 @@ public class SqlGenerator implements SqlOperations {
             sql.append(primaryKey).append(SPACE).append(EQUAL).append(SPACE);
             sql.append(COLON).append(CamelCaseUtils.convertUnderscoreNameToPropertyName(primaryKey));
         }
-        return sql.toString();
-    }
-
-    public String generateSelectSql(String tableName) throws SQLException {
-        StringBuilder sql = new StringBuilder();
-        sql.append(SELECT).append(SPACE);
-        return null;
-    }
-
-    public String generateSql(String tableName) throws SQLException {
-
-        return null;
-    }
-
-
-    public String generateModel(String tableName) {
-
-        return tableName;
     }
 
 }

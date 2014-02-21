@@ -4,7 +4,6 @@ import org.junit.Test;
 import org.junit.Before;
 import org.junit.After;
 import static org.junit.Assert.*;
-import static org.hamcrest.Matchers.*;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
@@ -47,10 +46,11 @@ public class SqlGeneratorTest {
         System.out.println(sql);
     }
 
+
     @Test
-    public void testGenerateSql() throws Exception {
-        assertThat(10, is(10));
-        sqlGenerator.generateSql(TABLE_NAME_TEST);
+    public void testGenerateUpdateSql() throws Exception {
+        String sql = sqlGenerator.generateUpdateSql(TABLE_NAME_TEST);
+        System.out.println(sql);
     }
 
     @Test
