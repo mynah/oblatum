@@ -116,8 +116,11 @@ public class SqlGenerator implements SqlOperations {
     }
 
     public String generateSelectSql(String tableName) throws SQLException {
+        List<String> primaryKeys = this.getPrimaryKeys(tableName);
         StringBuilder sql = new StringBuilder();
-        sql.append(SELECT).append(SPACE);
+        sql.append(SELECT).append(SPACE).append(ASTERISK).append(SPACE);
+        sql.append(FROM).append(SPACE).append(tableName.toLowerCase());
+        this.appendPrimaryKeys(sql, primaryKeys);
         return sql.toString();
     }
 

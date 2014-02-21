@@ -54,9 +54,16 @@ public class SqlGeneratorTest {
     }
 
     @Test
+    public void testGenerateSelectSql() throws Exception {
+        String sql = sqlGenerator.generateSelectSql(TABLE_NAME_TEST);
+        System.out.println(sql);
+    }
+
+    @Test
     public void testGenerateModel() throws Exception {
         String tableName = "TEST";
-        sqlGenerator.generateModel(tableName);
+        String text = sqlGenerator.generateModel(tableName);
+        System.out.println(text);
     }
 
 
