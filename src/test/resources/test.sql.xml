@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<sqlMap namespace="test">
+    <sql id="select">
+        xxxxx
+    </sql>
+    <sql id="select">
+        <![CDATA[select id,name from test]]>
+    </sql>
+    <sqlx id="query">
+        <![CDATA[
+        query id,name from test]]>
+    </sqlx>
+    <sql id="insert">
+        <![CDATA[insert id,name from test
+        ]]>
+    </sql>
+    <xxx id="xxx">
+        <![CDATA[
+        xxx id,name from test
+        ]]>
+    </xxx>
+    <sql id="update">
+        <![CDATA[
+        update id,name from test
+        ]]>
+    </sql>
+    <sql id="delete">
+        <![CDATA[
+
+
+        delete id,name from test
+
+
+        ]]>
+    </sql>
+</sqlMap>

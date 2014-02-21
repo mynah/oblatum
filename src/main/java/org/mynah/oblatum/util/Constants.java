@@ -22,5 +22,6 @@ public class Constants {
     public static final String UPDATE = "update";
     public static final String SET = "set";
     public static final String LINE_SEPARATOR = System.getProperties().getProperty("line.separator");
+    public static final String DOT = ".";
 
 }
