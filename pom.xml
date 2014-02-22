@@ -1,11 +1,46 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <groupId>org.mynah</groupId>
     <artifactId>oblatum</artifactId>
     <version>0.0.1</version>
     <packaging>jar</packaging>
+    <description>spring jdbc wrapper</description>
     <name>oblatum</name>
     <url>http://www.mynah.org</url>
+
+    <parent>
+        <groupId>org.sonatype.oss</groupId>
+        <artifactId>oss-parent</artifactId>
+        <version>7</version>
+    </parent>
+
+    <licenses>
+        <license>
+            <name>Apache License, Version 2.0</name>
+            <url>http://www.apache.org/licenses/LICENSE-2.0</url>
+        </license>
+    </licenses>
+
+    <scm>
+        <url>scm:git:git@github.com:mynah/repository.git</url>
+        <connection>scm:git:git@github.com:mynah/repository.git</connection>
+        <developerConnection>scm:git:git@github.com:mynah/repository.git</developerConnection>
+    </scm>
+
+    <developers>
+        <developer>
+            <id>Lamb</id>
+            <name>Lamb</name>
+            <email>lambgao@me.com</email>
+            <url>https://github.com/lamb</url>
+            <roles>
+                <role>Leader</role>
+                <role>Initial Committer</role>
+            </roles>
+            <timezone>+8</timezone>
+        </developer>
+    </developers>
 
     <properties>
         <finalName>oblatum</finalName>
@@ -90,12 +125,6 @@
         </dependency>
     </dependencies>
 
-    <scm>
-        <connection>scm:git:git@github.com:mynah/repository.git</connection>
-        <developerConnection>scm:git:git@github.com:mynah/repository.git</developerConnection>
-        <tag>oblatum-0.0.1</tag>
-    </scm>
-
     <build>
         <resources>
             <resource>
@@ -152,11 +181,6 @@
                     <charset>${project.build.sourceEncoding}</charset>
                     <encoding>${project.build.sourceEncoding}</encoding>
                 </configuration>
-            </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-release-plugin</artifactId>
-                <version>${version.maven-release-plugin}</version>
             </plugin>
         </plugins>
         <finalName>${finalName}-${version}</finalName>
