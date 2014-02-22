@@ -1,8 +1,9 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <groupId>org.mynah</groupId>
     <artifactId>oblatum</artifactId>
-    <version>0.0.2-SNAPSHOT</version>
+    <version>0.0.1-SNAPSHOT</version>
     <packaging>jar</packaging>
     <name>oblatum</name>
     <url>http://www.mynah.org</url>
@@ -91,24 +92,10 @@
     </dependencies>
 
     <scm>
-        <connection>scm:git:git@github.com:mynah/oblatum.git</connection>
-        <developerConnection>scm:git:git@github.com:mynah/oblatum.git</developerConnection>
-      <tag>HEAD</tag>
-  </scm>
-    <distributionManagement>
-        <repository>
-            <id>release</id>
-            <name>Maven Repository at Github</name>
-            <url>scm:git:git@github.com:mynah/repository.git/release</url>
-        </repository>
-
-        <snapshotRepository>
-            <id>snapshot</id>
-            <name>Maven Repository at Github</name>
-            <url>scm:git:git@github.com:mynah/repository.git/snapshot</url>
-            <uniqueVersion>true</uniqueVersion>
-        </snapshotRepository>
-    </distributionManagement>
+        <connection>scm:git:git@github.com:mynah/repository.git</connection>
+        <developerConnection>scm:git:git@github.com:mynah/repository.git</developerConnection>
+        <tag>HEAD</tag>
+    </scm>
 
     <build>
         <resources>
