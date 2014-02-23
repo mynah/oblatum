@@ -24,7 +24,7 @@ public class SqlMap implements SqlMapOperations {
     public static final String KEY_NAMESPACE = "namespace";
     public static final String KEY_ID = "id";
     public static final String KEY_SQL = "sql";
-    private String locationPattern = "classpath:*sql.xml";
+    private String locationPattern = "classpath:*.*sql.xml";
     private final Map<String, String> sqlMap = new HashMap<String, String>();
 
     public SqlMap(String locationPattern) throws IOException, ParserConfigurationException, SAXException {
