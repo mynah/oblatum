@@ -6,9 +6,9 @@ Oblatum
 Features
 ========
 
-* MappingJdbcTemplate help you nosql to do simple database operations.
-* SqlMap help you store procedures or sql statements using a xml descriptor.
-* SqlGenerator hep you automatically generate sql by a table.
+* MappingJdbcTemplate can help you nosql to do simple database operations.
+* SqlMap can help you store procedures or sql statements using a xml descriptor.
+* SqlGenerator can hep you automatically generate sql and propertyName from a table.
 
 Maven dependency
 ================
@@ -38,7 +38,7 @@ Quick start
 <T> int insert(T t) throws DataAccessException;
 ```
 
-> SqlMap help you store procedures or sql statements using a xml descriptor.
+> SqlMap can help you store procedures or sql statements using a xml descriptor.
 
 ```xml
 <bean id="sqlMap" class="org.mynah.oblatum.sql.SqlMap">
@@ -57,7 +57,7 @@ Quick start
 String get(String key);
 ```
 
-> SqlGenerator hep you automatically generate sql by a table.
+> SqlGenerator can hep you automatically generate sql and propertyName from a table.
 
 ```java
 public interface SqlOperations {
