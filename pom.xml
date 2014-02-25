@@ -1,9 +1,8 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <groupId>org.mynah</groupId>
     <artifactId>oblatum</artifactId>
-    <version>0.0.3-SNAPSHOT</version>
+    <version>0.0.3</version>
     <packaging>jar</packaging>
     <description>spring jdbc wrapper</description>
     <name>oblatum</name>
@@ -26,7 +25,7 @@
         <url>scm:git:git@github.com:mynah/oblatum.git</url>
         <connection>scm:git:git@github.com:mynah/oblatum.git</connection>
         <developerConnection>scm:git:git@github.com:mynah/oblatum.git</developerConnection>
-        <tag>oblatum-0.0.2</tag>
+        <tag>oblatum-0.0.3</tag>
     </scm>
 
     <developers>
