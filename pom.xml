@@ -2,7 +2,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>org.mynah</groupId>
     <artifactId>oblatum</artifactId>
-    <version>0.0.2-SNAPSHOT</version>
+    <version>0.0.2</version>
     <packaging>jar</packaging>
     <description>spring jdbc wrapper</description>
     <name>oblatum</name>
@@ -25,6 +25,7 @@
         <url>scm:git:git@github.com:mynah/repository.git</url>
         <connection>scm:git:git@github.com:mynah/repository.git</connection>
         <developerConnection>scm:git:git@github.com:mynah/repository.git</developerConnection>
+    <tag>oblatum-0.0.2</tag>
   </scm>
 
     <developers>
