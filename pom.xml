@@ -46,10 +46,10 @@
         <finalName>oblatum</finalName>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <version.jdk>1.6</version.jdk>
-        <version.maven-compiler-plugin>2.5.1</version.maven-compiler-plugin>
-        <version.maven-checkstyle-plugin>2.9.1</version.maven-checkstyle-plugin>
+        <version.maven-compiler-plugin>3.1</version.maven-compiler-plugin>
+        <version.maven-checkstyle-plugin>2.11</version.maven-checkstyle-plugin>
         <version.maven-resources-plugin>2.6</version.maven-resources-plugin>
-        <version.maven-javadoc-plugin>2.9</version.maven-javadoc-plugin>
+        <version.maven-javadoc-plugin>2.9.1</version.maven-javadoc-plugin>
         <!-- Spring version -->
         <version.spring>4.0.1.RELEASE</version.spring>
         <!-- Test -->
@@ -135,6 +135,7 @@
         </resources>
         <plugins>
             <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
                 <version>${version.maven-compiler-plugin}</version>
                 <configuration>
@@ -182,6 +183,6 @@
                 </configuration>
             </plugin>
         </plugins>
-        <finalName>${finalName}-${version}</finalName>
+        <finalName>${finalName}-${project.version}</finalName>
     </build>
 </project>
