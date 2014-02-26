@@ -50,7 +50,6 @@
         <version.maven-checkstyle-plugin>2.9.1</version.maven-checkstyle-plugin>
         <version.maven-resources-plugin>2.6</version.maven-resources-plugin>
         <version.maven-javadoc-plugin>2.9</version.maven-javadoc-plugin>
-        <version.maven-release-plugin>2.4.2</version.maven-release-plugin>
         <!-- Spring version -->
         <version.spring>4.0.1.RELEASE</version.spring>
         <!-- Test -->
@@ -181,11 +180,6 @@
                     <charset>${project.build.sourceEncoding}</charset>
                     <encoding>${project.build.sourceEncoding}</encoding>
                 </configuration>
-            </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-release-plugin</artifactId>
-                <version>${version.maven-release-plugin}</version>
             </plugin>
         </plugins>
         <finalName>${finalName}-${version}</finalName>
