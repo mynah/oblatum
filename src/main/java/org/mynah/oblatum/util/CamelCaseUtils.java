@@ -57,6 +57,13 @@ public class CamelCaseUtils {
         return result.toString();
     }
 
+    /**
+     * Convert a column name with underscores to the corresponding class name using "camel case".  A name
+     * like "customer_number" would match a "CustomerNumber" class name.
+     *
+     * @param name the column name to be converted
+     * @return the name using "camel case"
+     */
     public static String convertUnderscoreNameToClassName(String name) {
         StringBuilder result = new StringBuilder();
         boolean nextIsUpper = false;
