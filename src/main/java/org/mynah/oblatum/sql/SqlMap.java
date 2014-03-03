@@ -67,7 +67,7 @@ public class SqlMap implements SqlMapOperations {
                 String sql = getText(element);
                 String key = namespace + Constants.DOT + id;
                 if (sqlMap.containsKey(key)) {
-                    logger.error(key + " already exists!!!");
+                    logger.error(key + " already exists!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
                 }
                 sqlMap.put(key, sql);
             }
