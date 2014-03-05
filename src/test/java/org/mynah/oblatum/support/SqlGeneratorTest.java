@@ -65,5 +65,9 @@ public class SqlGeneratorTest {
         System.out.println(text);
     }
 
+    @Test
+    public void testGenerate() throws Exception {
+        sqlGenerator.generate(TABLE_NAME_TEST);
+    }
 
 } 

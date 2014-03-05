@@ -1,6 +1,8 @@
 package org.mynah.oblatum.support;
 
 import javax.sql.DataSource;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.mynah.oblatum.model.Column;
 import org.mynah.oblatum.util.CamelCaseUtils;
 import org.springframework.jdbc.datasource.DataSourceUtils;
@@ -14,6 +16,10 @@ import static org.mynah.oblatum.util.Constants.*;
 
 public class SqlGenerator implements SqlOperations {
 
+    /**
+     * Logger available to subclasses
+     */
+    protected final Log logger = LogFactory.getLog(getClass());
     private DataSource dataSource;
 
     public SqlGenerator() {
@@ -66,6 +72,7 @@ public class SqlGenerator implements SqlOperations {
         return columns;
     }
 
+    @Override
     public String generateInsertSql(String tableName) throws SQLException {
         List<Column> list = this.getColumns(tableName);
         StringBuilder columns = new StringBuilder();
@@ -87,6 +94,7 @@ public class SqlGenerator implements SqlOperations {
         return columns.toString();
     }
 
+    @Override
     public String generateDeleteSql(String tableName) throws SQLException {
         List<String> primaryKeys = this.getPrimaryKeys(tableName);
         StringBuilder sql = new StringBuilder();
@@ -95,6 +103,7 @@ public class SqlGenerator implements SqlOperations {
         return sql.toString();
     }
 
+    @Override
     public String generateUpdateSql(String tableName) throws SQLException {
         List<Column> list = this.getColumns(tableName);
         List<String> primaryKeys = this.getPrimaryKeys(tableName);
@@ -115,6 +124,7 @@ public class SqlGenerator implements SqlOperations {
         return sql.toString();
     }
 
+    @Override
     public String generateSelectSql(String tableName) throws SQLException {
         List<String> primaryKeys = this.getPrimaryKeys(tableName);
         StringBuilder sql = new StringBuilder();
@@ -124,6 +134,7 @@ public class SqlGenerator implements SqlOperations {
         return sql.toString();
     }
 
+    @Override
     public String generatePropertyName(String tableName) throws SQLException {
         StringBuilder text = new StringBuilder();
         text.append(CamelCaseUtils.convertUnderscoreNameToClassName(tableName)).append(LINE_SEPARATOR);
@@ -133,6 +144,15 @@ public class SqlGenerator implements SqlOperations {
             text.append(LINE_SEPARATOR);
         }
         return text.toString();
+    }
+
+    @Override
+    public void generate(String tableName) throws SQLException {
+        logger.info(this.generateSelectSql(tableName));
+        logger.info(this.generateInsertSql(tableName));
+        logger.info(this.generateDeleteSql(tableName));
+        logger.info(this.generateUpdateSql(tableName));
+        logger.info(this.generatePropertyName(tableName));
     }
 
     private void appendPrimaryKeys(StringBuilder sql, List<String> primaryKeys) {

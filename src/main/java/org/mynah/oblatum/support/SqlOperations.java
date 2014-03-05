@@ -14,4 +14,6 @@ public interface SqlOperations {
 
     String generatePropertyName(String tableName) throws SQLException;
 
+    void generate(String tableName) throws SQLException;
+
 }
