@@ -23,5 +23,8 @@ public class Constants {
     public static final String SET = "set";
     public static final String LINE_SEPARATOR = System.getProperties().getProperty("line.separator");
     public static final String DOT = ".";
+    public static final String SEMICOLON = ";";
+    public static final String PRIVATE_STRING = "private String ";
+
 
 }

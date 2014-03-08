@@ -140,8 +140,9 @@ public class SqlGenerator implements SqlOperations {
         text.append(CamelCaseUtils.convertUnderscoreNameToClassName(tableName)).append(LINE_SEPARATOR);
         List<Column> list = this.getColumns(tableName);
         for (int i = 0; i < list.size(); i++) {
+            text.append(PRIVATE_STRING);
             text.append(CamelCaseUtils.convertUnderscoreNameToPropertyName(list.get(i).getColumnName()));
-            text.append(LINE_SEPARATOR);
+            text.append(SEMICOLON).append(LINE_SEPARATOR);
         }
         return text.toString();
     }
