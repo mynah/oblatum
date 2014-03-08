@@ -114,10 +114,12 @@ public class SqlGenerator implements SqlOperations {
         for (int i = 0; i <= count; i++) {
             Column column = list.get(i);
             String columnName = column.getColumnName();
-            sql.append(SPACE).append(columnName).append(SPACE).append(EQUAL).append(SPACE).append(COLON);
-            sql.append(CamelCaseUtils.convertUnderscoreNameToPropertyName(columnName));
-            if (i < count) {
-                sql.append(COMMA);
+            if (!primaryKeys.contains(columnName)) {
+                sql.append(SPACE).append(columnName).append(SPACE).append(EQUAL).append(SPACE).append(COLON);
+                sql.append(CamelCaseUtils.convertUnderscoreNameToPropertyName(columnName));
+                if (i < count) {
+                    sql.append(COMMA);
+                }
             }
         }
         this.appendPrimaryKeys(sql, primaryKeys);
